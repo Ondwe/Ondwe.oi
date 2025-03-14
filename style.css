@@ -1,0 +1,36 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: #222;
+  color: white;
+  padding: 20px 0; /* Increased padding */
+  text-align: center; /* Centered the header text */
+}
+
+nav ul {
+  list-style: none;
+  padding: 10px 0; /* Added padding to the nav ul */
+  text-align: center; /* Centered the nav links */
+}
+
+nav li {
+  display: inline;
+  margin: 0 20px; /* Increased margin */
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+section {
+  padding: 40px 20px; /* Increased padding */
+}
+
+h1, h2 { /* Added styling for headings */
+  margin-bottom: 20px;
+}
