@@ -12,10 +12,11 @@ def extract_title(url):
 
 def main():
     urls = [
-        "https://www.example.com",
-        "https://www.iana.org/domains/example",
-        # Add more URLs here
-    ]
+    "https://www.example.com",
+    "https://www.iana.org/domains/example",
+    "https://www.python.org"  # Added URL
+]
+
 
     results = []
     for url in urls:
