@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Humbulani Mudau | Sovereign Tech Stack</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-red: #f85149;
+            --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .terminal-prompt {
+            font-family: var(--font-mono);
+            color: var(--accent-green);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .terminal-prompt::before {
+            content: "humbu@termux:~$ ";
+            color: var(--text-muted);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .quote {
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            font-style: italic;
+            max-width: 600px;
+            margin: 0 auto 1.5rem auto;
+            font-size: 0.95rem;
+        }
+
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        #searchInput:focus {
+            border-color: var(--accent);
+        }
+
+        #searchInput::placeholder {
+            color: var(--text-muted);
+        }
+
+        .stats {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 4px 20px rgba(88, 166, 255, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-title {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .card-title:hover {
+            text-decoration: underline;
+        }
+
+        .lang-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background-color: rgba(88, 166, 255, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        .card-footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .card-footer a:hover {
+            color: #fff;
+        }
+
+        .live-badge {
+            color: var(--accent-green);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 1rem; }
+            h1 { font-size: 1.8rem; }
+            .grid { grid-template-columns: 1fr; }
+            .card-header { flex-direction: column; gap: 0.5rem; }
+            .lang-tag { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="terminal-prompt">./init_empire.sh --status</div>
+        <h1>Humbulani Mudau</h1>
+        <p class="quote">"In the terminal, we find the facts. In JSON, we organize the Absolute Truth. On this phone, we build an empire."</p>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="grep -i 'project'..." autocomplete="off">
+            <div class="stats" id="stats">Loading repositories...</div>
+        </div>
+    </header>
+
+    <main class="grid" id="repoGrid">
+        <!-- Cards will be injected here by JavaScript -->
+    </main>
+
+    <footer>
+        <p>Built on Termux (Android) • No laptop. No cloud bill. No dependencies.</p>
+        <p><a href="https://github.com/Humbulan" target="_blank">github.com/Humbulan</a> • getfriendhumbulani30@gmail.com</p>
+    </footer>
+
+    <script>
+        // Master Repository Data
+        const repos = [
+            // --- Core & Engineering ---
+            { name: "nexus-agent", desc: "Single-binary service monitor — 79 services in 25ms, Slack alerts on state change. No DB, no dashboard.", lang: "Go", live: "https://humbulan.github.io/nexus-agent/" },
+            { name: "shab-polyglot", desc: "Register-based VM in C — 22 instructions, 256 registers, bounds-checked memory. Cross-platform single binary.", lang: "C", live: "https://humbulan.github.io/shab-polyglot/" },
+            
+            // --- Security & CTFs ---
+            { name: "humbu-dsvw", desc: "DSVW (vulnerable) and DSSW (hardened) side by side — 12 vulnerability classes fixed and documented.", lang: "Python" },
+            { name: "dssw-patch-review", desc: "Security audit CTF — an auditor claimed 12 fixes. Find what they missed. 3 flags.", lang: "Python" },
+            { name: "hak3r", desc: "Security tooling and offensive scripts.", lang: "Python" },
+            { name: "Skim99", desc: "Skim99 utility script.", lang: "Python" },
+            
+            // --- CodeCrafters Builds ---
+            { name: "build-your-own-http-server", desc: "HTTP/1.1 from scratch — 14/14 CodeCrafters stages, plus MariaDB logging and Prometheus metrics.", lang: "Python" },
+            { name: "build-your-own-dns-server", desc: "DNS from scratch — 8/8 stages, recursive resolution, blocklist, Prometheus metrics.", lang: "Python" },
+            { name: "build-your-own-redis", desc: "Redis clone in Python — RESP protocol, PING/SET/GET, event loop.", lang: "Python" },
+            { name: "Build-your-own-Claude-Code", desc: "AI coding agent from scratch — read/write/bash tools + multi-step agent loop.", lang: "Python" },
+            { name: "build-your-own-bittorrent", desc: "BitTorrent client protocol implementation.", lang: "Python" },
+            { name: "build-your-own-git-project", desc: "Git internals and object database implementation.", lang: "Python" },
+            
+            // --- Enterprise & Commerce ---
+            { name: "humbu-store-website", desc: "E-commerce website frontend.", lang: "HTML" },
+            { name: "humbu-store.io", desc: "E-commerce platform core.", lang: "HTML" },
+            { name: "humbu-enterprise-platform", desc: "Enterprise platform management system.", lang: "HTML" },
+            { name: "humbu-community-nexus", desc: "Community nexus portal.", lang: "HTML" },
+            { name: "humbu-payments", desc: "Payment integration and processing gateway.", lang: "HTML" },
+            { name: "humbu-legacy-platform", desc: "Legacy platform maintenance and migration.", lang: "HTML" },
+            { name: "imperial-nexus", desc: "Sovereign logistics platform.", lang: "HTML" },
+            { name: "imperial-trade-sentinel", desc: "Trade monitoring and sentinel system.", lang: "HTML" },
+            { name: "imperial-network", desc: "Network infrastructure and routing.", lang: "HTML" },
+            { name: "imperial-network-v2", desc: "Network infrastructure v2.", lang: "HTML" },
+            { name: "imperial-dashboard", desc: "Command and control dashboard.", lang: "HTML" },
+            
+            // --- AI & Automation ---
+            { name: "hwdia-ai-agent", desc: "Autonomous AI agent implementation.", lang: "Python" },
+            { name: "smart-notes-ai", desc: "AI-powered note taking and organization.", lang: "JavaScript" },
+            { name: "humbu-ai-automation", desc: "AI automation workflows and pipelines.", lang: "Python" },
+            { name: "business-daily-automation", desc: "Business daily task automation scripts.", lang: "Python" },
+            { name: "humbu-rural-bot-core", desc: "Rural bot core automation engine.", lang: "Python" },
+            { name: "My-IA-Assistant", desc: "Personal IA assistant interface.", lang: "HTML" },
+            
+            // --- Web & Apps ---
+            { name: "humbu-mobile-app", desc: "React Native mobile application.", lang: "JavaScript" },
+            { name: "task-manager-app", desc: "Task manager application.", lang: "HTML" },
+            { name: "task-app-v2", desc: "Task app v2 with enhanced features.", lang: "HTML" },
+            { name: "python-projects", desc: "Collection of Python scripts and utilities.", lang: "Python" },
+            { name: "programming-language", desc: "Custom programming language experiments.", lang: "HTML" },
+            { name: "HM.Certificate", desc: "Certificate generation and verification.", lang: "HTML" },
+            { name: "Ondwe", desc: "Ondwe project.", lang: "HTML" },
+            { name: "Ondwe.io", desc: "Ondwe.io web application.", lang: "HTML" },
+            { name: "Chief-Custodian", desc: "Chief Custodian system.", lang: "HTML" },
+            
+            // --- Meta / Org ---
+            { name: "THE-IMPERIAL-CYBER-BOOK", desc: "60 days from zero to operator on Termux — Build, Audit, Observe, Connect.", lang: "HTML", live: "https://humbu.dpdns.org" },
+            { name: "Humbulani.github.io", desc: "Personal GitHub Pages and portfolio.", lang: "HTML" },
+            { name: "repository", desc: "General repository storage.", lang: "HTML" },
+            { name: ".github", desc: "Organization profile and community health files.", lang: "HTML" }
+        ];
+
+        const grid = document.getElementById('repoGrid');
+        const searchInput = document.getElementById('searchInput');
+        const stats = document.getElementById('stats');
+
+        // Function to render cards
+        function renderRepos(filterText = '') {
+            grid.innerHTML = '';
+            const filtered = repos.filter(repo => 
+                repo.name.toLowerCase().includes(filterText.toLowerCase()) || 
+                repo.desc.toLowerCase().includes(filterText.toLowerCase()) ||
+                repo.lang.toLowerCase().includes(filterText.toLowerCase())
+            );
+
+            stats.textContent = `Found ${filtered.length} of ${repos.length} repositories`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); font-family: var(--font-mono); padding: 2rem;">No results found for "${filterText}"</div>`;
+                return;
+            }
+
+            filtered.forEach(repo => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                const liveLink = repo.live 
+                    ? `<a href="${repo.live}" target="_blank" class="live-badge">● Live Page</a>` 
+                    : `<span style="color: var(--text-muted);">○ No Page</span>`;
+
+                card.innerHTML = `
+                    <div class="card-header">
+                        <a href="https://github.com/Humbulan/${repo.name}" target="_blank" class="card-title">${repo.name}</a>
+                        <span class="lang-tag">${repo.lang}</span>
+                    </div>
+                    <p class="card-desc">${repo.desc}</p>
+                    <div class="card-footer">
+                        <a href="https://github.com/Humbulan/${repo.name}" target="_blank">View Repo →</a>
+                        ${liveLink}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Initial render
+        renderRepos();
+
+        // Search event listener
+        searchInput.addEventListener('input', (e) => {
+            renderRepos(e.target.value);
+        });
+    </script>
+</body>
+</html>
